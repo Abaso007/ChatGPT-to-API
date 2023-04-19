@@ -9,12 +9,7 @@ def remove_duplicates(file_lines):
     """
     Removes duplicate lines from a file
     """
-    lines_set = set()
-    for lin in file_lines:
-        #if json.loads(lin)["output"] == "":
-        #    continue
-        lines_set.add(lin)
-    return lines_set
+    return set(file_lines)
 
 
 if __name__ == "__main__":
@@ -23,9 +18,8 @@ if __name__ == "__main__":
         sys.exit(1)
     orig_file = open(sys.argv[1], "r", encoding="utf-8").readlines()
     lines = remove_duplicates(orig_file)
-    file = open("clean_" + sys.argv[1], "w", encoding="utf-8")
-    for line in lines:
-        file.write(line)
-    file.close()
+    with open(f"clean_{sys.argv[1]}", "w", encoding="utf-8") as file:
+        for line in lines:
+            file.write(line)
     # Print difference
     print(len(orig_file) - len(lines))
